@@ -1,0 +1,48 @@
+version: '3'
+services:
+  dockerjl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment: 
+      - JUPYTER_TOKEN=password
+      - JUPYTER_ENABLE_LAB=yes
+      - MONGO_URI=mongodb://localhost:27017 
+    depends_on:
+      - dockerdb
+    links: 
+      - dockerdb
+    volumes:
+      - ./:/home/jovyan/work
+    ports:
+      - 8888:8888
+    container_name: dockerjl
+  
+  dockerdb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=ECGcollection
+    volumes:
+      - ./ECGcollection:/tmp/ECGcollection
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
+    container_name: dockerdb
+  
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on: 
+      - dockerdb
+    links:
+      - dockerdb
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=dockerdb
+    container_name: mongo-express
+    

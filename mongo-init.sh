@@ -1,0 +1,1 @@
+mongoimport --host=localhost:27017 --db ECGdb --collection ECGcollection --type json --file /tmp/ECGcollection 
