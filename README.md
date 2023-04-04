@@ -12,7 +12,7 @@ This repository contains the following files:
 - myapp.ipynb - jupyter notebook that classifies ECG data using ResNet deep learning model
 
 Instructions on how to run this Docker application:
-- Download Docker from https://www.docker.com/. 
+- Download and install Docker from https://www.docker.com/. 
 - Clone this git repo with git lfs (https://git-lfs.com/) running the following command: "git lfs clone https://github.com/RatioAurea/Programming-Challenge.git". The ECGcollection file is larger than 100MB so it is stored in the repository using Git Large File Storage. Another option is to manually download the ECGcollection file from the repository.
 - Run the following command: "docker-compose -f composer.yml up -d --build". This might take a while because Docker has to pull the needed images from Docker Hub library if they do not already exist on the host machine (jupyter/datascience-notebook and tensorflow package are rather large, ca. 6GB and 600MB respectively).
 - Go to localhost:8888 address in any web browser to open Jupyter Lab environment (the password for entering Jupyter Lab is: password).
